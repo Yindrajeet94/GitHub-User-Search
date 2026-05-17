@@ -1,25 +1,38 @@
-
-<div class="container d-flex flex-column align-items-center">
-    <h1 class="mb-4 mt-4">GitHub User Search</h1>
-    <input type="search" placeholder="Search" (input)="searchText($event)">
-</div>
-
-<section class="search-results">
-    <div *ngIf="searchResults$ | async as results">
-        <div *ngIf="results.items?.length; else noResults">
-            <div class="results-grid">
-                <div class="card" *ngFor="let item of results.items">
-                    <img [src]="item.avatar_url" alt="{{item.login}}" width="48">
-                    <div class="card-body">
-                        <a [href]="item.html_url" target="_blank">
-                            <h2>{{ item.login | titlecase }}</h2>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <ng-template #noResults>
-            <p>No results</p>
-        </ng-template>
+<div class="container py-4">
+  <div class="text-center mb-4">
+    <h1 class="mb-3">GitHub User Search</h1>
+    <div class="mx-auto" style="max-width: 720px;">
+      <input type="search" class="form-control form-control-lg rounded-pill shadow-sm" placeholder="Search GitHub users" (input)="searchText($event)">
     </div>
-</section>
+  </div>
+
+  <section class="search-results">
+    <div *ngIf="searchResults$ | async as results">
+      <div *ngIf="results.items?.length; else noResults">
+        <div class="row gx-3 gy-3">
+          <div class="col-12 col-md-6 col-xl-4 mb-2" *ngFor="let item of results.items">
+            <div class="card h-100 shadow-sm border-0">
+              <div class="row g-0 align-items-start">
+                <div class="col-auto p-3">
+                  <img [src]="item.avatar_url" [alt]="item.login" class="rounded-circle" style="width:64px; height:64px; object-fit:cover;">
+                </div>
+                <div class="col">
+                  <div class="card-body py-3">
+                    <a [href]="item.html_url" target="_blank" class="text-decoration-none d-block rounded px-2 py-1 link-highlight w-100">
+                      <h2 class="h6 mb-1 text-primary text-truncate text-nowrap" style="max-width:100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{{ item.login | titlecase }}</h2>
+                      <p class="mb-1 text-muted small text-truncate" style="max-width:100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Open GitHub profile</p>
+                      <p class="mb-0 text-muted smaller text-truncate" style="max-width:100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">github.com/{{ item.login }}</p>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <ng-template #noResults>
+        <div class="alert alert-secondary text-center mb-0">No results</div>
+      </ng-template>
+    </div>
+  </section>
+</div>

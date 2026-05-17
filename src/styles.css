@@ -1,1 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
+html,
+body {
+  min-height: 100%;
+  margin: 0;
+  background: radial-gradient(circle at top left, rgba(96, 165, 250, 0.18), transparent 24%),
+              radial-gradient(circle at bottom right, rgba(192, 132, 252, 0.12), transparent 22%),
+              linear-gradient(180deg, #0a1228 0%, #111827 100%);
+  color: #e2e8f0;
+  font-family: Inter, system-ui, sans-serif;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at 20% 10%, rgba(59, 130, 246, 0.14), transparent 18%),
+              radial-gradient(circle at 75% 15%, rgba(168, 85, 247, 0.12), transparent 20%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+body {
+  background-color: #0a1228;
+}
+
