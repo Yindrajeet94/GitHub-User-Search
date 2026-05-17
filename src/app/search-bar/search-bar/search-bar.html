@@ -1,0 +1,25 @@
+
+<div class="container d-flex flex-column align-items-center">
+    <h1 class="mb-4 mt-4">GitHub User Search</h1>
+    <input type="search" placeholder="Search" (input)="searchText($event)">
+</div>
+
+<section class="search-results">
+    <div *ngIf="searchResults$ | async as results">
+        <div *ngIf="results.items?.length; else noResults">
+            <div class="results-grid">
+                <div class="card" *ngFor="let item of results.items">
+                    <img [src]="item.avatar_url" alt="{{item.login}}" width="48">
+                    <div class="card-body">
+                        <a [href]="item.html_url" target="_blank">
+                            <h2>{{ item.login | titlecase }}</h2>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <ng-template #noResults>
+            <p>No results</p>
+        </ng-template>
+    </div>
+</section>
