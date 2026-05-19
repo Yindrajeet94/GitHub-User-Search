@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable, Subject, of } from 'rxjs';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, switchMap, catchError } from 'rxjs/operators';
 import { SearchApi } from '../../github-api/github-api';
 
 @Component({
@@ -25,7 +25,12 @@ export class SearchBar implements OnInit{
       distinctUntilChanged(),
       switchMap(term => {
         const trimmed = term.trim();
-        return trimmed ? this.searchApi.searchThroughGit(trimmed) : of({ items: [] });
+        return (trimmed ? this.searchApi.searchThroughGit(trimmed) : of({ items: [] })).pipe(
+          catchError(error => {
+            console.error('Search error:', error);
+            return of({ items: [] });
+          })
+        );
       })
     );
   }
